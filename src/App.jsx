@@ -230,7 +230,7 @@ function App() {
           )}
           <Polyline onLoad={onLoad} path={path} options={options} />
         
-          <AsignacionNodos />
+          <AsignacionNodos /> 
         </GoogleMap>
       </Box>
       <Box
@@ -257,7 +257,7 @@ function App() {
               />
             </Autocomplete>
           </Box>
-
+         
           <ButtonGroup>
             <Button colorScheme="pink" type="submit" onClick={calculateRoute}>
               Calculate Route
@@ -268,6 +268,7 @@ function App() {
               onClick={clearRoute}
             />
           </ButtonGroup>
+          
         </HStack>
         <HStack spacing={4} mt={4} justifyContent="space-between">
           <Text>Distance: {distance} </Text>
@@ -284,6 +285,7 @@ function App() {
         </HStack>
       </Box>
     </Flex>
+    
   );
 }
 

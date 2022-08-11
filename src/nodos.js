@@ -1,7 +1,7 @@
 import data from "./data.json";
 
 import Graph from "node-dijkstra";
-
+import React from "react";
 import {
   useJsApiLoader,
   GoogleMap,
@@ -14,6 +14,7 @@ import {
 } from "@react-google-maps/api";
 import { Divider } from "@chakra-ui/react";
 import { useEffect } from "react";
+
 
 async function CalcularDistancia(nodo1, nodo2) {
   var distancia = 0;
@@ -48,14 +49,22 @@ async function CalcularDistancia(nodo1, nodo2) {
   } catch (error) {
     return null;
   }
+
+  
 }
 
+
+
+
 export const AsignacionNodos = () => {
+  const [array,setarray] = React.useState([]);
   useEffect(() => {
-    calculate();
+     calculate()  
+    
+
   }, []);
 
-   function calculate() {
+  async function  calculate() {
     var g = new Graph();
     g.addNode("N1", {
       N2: await CalcularDistancia(data[0], data[1]),
@@ -78,63 +87,51 @@ export const AsignacionNodos = () => {
       N4: await CalcularDistancia(data[4], data[3]),
     });
     
-        console.log(g.path("N1", "N3"))
-        PintarRecorrido(g.path("N1", "N3")) 
-  }
-
+        //console.log(g.path("N1", "N3"))
+      // return PintarRecorrido(g.path("N1", "N3")) 
+        
+        setarray(g.path("N1", "N5"))
+  //    console.log(array)
+      }
+      
+      
    
 
-  return <div></div>;
-};
+  return <div> {array.map( (x) =>{
+   // console.log(array)
+  //     console.log(x) 
+  //    var pathC = [
+  //   { lat: -11.983702353375579, lng: -77.01002225748856 },
+  //   { lat: -11.984136487329181, lng: -77.01016260648828 },  ]
 
-
-const onLoad = (polyline) => {
-  console.log("polyline2: ", polyline);
-};
-
-
-function PintarRecorrido(array){  // ARRAY [N1, N2 , N3,N4,N5]
-    
-  for(var i=0; i<array.length-2;i++ ){
-      var  ParticionArray = array.slice(i, i+2)   // N1 , N2
-      var NodoI= data[Number(ParticionArray[0].substring(1,ParticionArray[0].length))-1] 
-      var NodoF= data[Number(ParticionArray[1].substring(1,ParticionArray[1].length))-1]
+  // var optionsC = {
+  //   strokeColor: "red",
+  //   strokeOpacity: 0.8,
+  //   strokeWeight: 2,
+  //   fillColor: "red",
+  //   fillOpacity: 0.35,
+  //   clickable: false,
+  //   draggable: false,
+  //   editable: false,
+  //   visible: true,
+  //   radius: 30000,
+  //   paths: [
+  //     { lat: -11.983702353375579, lng: -77.01002225748856 },
+  //     { lat: -11.984136487329181, lng: -77.01016260648828 },  ],
+  //   zIndex: 1,
+  // };
+  // return (<Polyline onLoad={onLoad} path={pathC} options={optionsC} />)
+    //return(<li>{x}</li>)
+    if (x!==array[array.length-1] ){ // N1 , N2 ,N3
+      var i =array.indexOf(x);
+      var NodoI= data[Number(array[i].substring(1,array[i].length))-1] 
+      var NodoF= data[Number(array[i+1].substring(1,array[i+1].length))-1]
+      //  console.log(NodoI)
       var pathC = [
-      { lat: Number(NodoI.lat), lng: Number(NodoI.lon) },
-      { lat: Number(NodoF.lat), lng: Number(NodoF.lon) },  ]
-    
- var optionsC = {
-  strokeColor: "red",
-  strokeOpacity: 0.8,
-  strokeWeight: 2,
-  fillColor: "red",
-  fillOpacity: 0.35,
-  clickable: false,
-  draggable: false,
-  editable: false,
-  visible: true,
-  radius: 30000,
-  paths: [
-    { lat: Number(NodoI.lat), lng: Number(NodoI.lon) },
-    { lat: Number(NodoF.lat), lng: Number(NodoF.lon) },
-  ],
-  zIndex: 1,
-};
-  console.log(NodoI)
-  return <Polyline onLoad={onLoad} path={pathC} options={optionsC} />
-  
-  }
-  
-
-}
-
-function ejemplo(){
-
-  var pathC = [
-    { lat: -11.983702353375579, lng: -77.01002225748856 },
-    { lat: -11.984136487329181, lng: -77.01016260648828 },  ]
-
-  var optionsC = {
+        { lat: Number(NodoI.lat), lng: Number(NodoI.lon) },
+        { lat: Number(NodoF.lat), lng: Number(NodoF.lon) },  ]
+      
+   var optionsC = {
     strokeColor: "red",
     strokeOpacity: 0.8,
     strokeWeight: 2,
@@ -146,10 +143,28 @@ function ejemplo(){
     visible: true,
     radius: 30000,
     paths: [
-      { lat: -11.983702353375579, lng: -77.01002225748856 },
-      { lat: -11.984136487329181, lng: -77.01016260648828 },  ],
+      { lat: Number(NodoI.lat), lng: Number(NodoI.lon) },
+      { lat: Number(NodoF.lat), lng: Number(NodoF.lon) },
+    ],
     zIndex: 1,
   };
-  console.log("villa gey")
-  return <Polyline onLoad={onLoad} path={pathC} options={optionsC} />
-}
+  
+      return(<Polyline onLoad={onLoad} path={pathC} options={optionsC} /> )
+    
+    }else{
+      
+    return (<div> </div> )
+    
+    }
+
+
+  })}  </div>;
+};
+
+
+
+
+
+const onLoad = (polyline) => {
+  console.log("polyline2: ", polyline);
+};
