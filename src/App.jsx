@@ -74,6 +74,8 @@ function App() {
     destiantionRef.current.value = "";
   }
 
+  
+
   const onLoad = (polyline) => {
     console.log("polyline: ", polyline);
   };
@@ -193,7 +195,7 @@ function App() {
       h="100vh"
       w="100vw"
     >
-      <AsignacionNodos />
+  
 
       {/* <Dkjistra nodo1={data[0]} nodo2={data[1]} /> */}
       <Box position="absolute" left={0} top={0} h="100%" w="100%">
@@ -221,11 +223,14 @@ function App() {
               />
             );
           })}
+     
 
           {directionsResponse && (
             <DirectionsRenderer directions={directionsResponse} />
           )}
           <Polyline onLoad={onLoad} path={path} options={options} />
+        
+          <AsignacionNodos />
         </GoogleMap>
       </Box>
       <Box
