@@ -39,12 +39,15 @@ function App() {
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const [distance, setDistance] = useState("");
   const [duration, setDuration] = useState("");
-
+  const [click, setClick] = useState(false);
   /** @type React.MutableRefObject<HTMLInputElement> */
   const originRef = useRef();
   /** @type React.MutableRefObject<HTMLInputElement> */
   const destiantionRef = useRef();
-
+  const showroute = () => {
+   console.log("ga");
+   setClick(true);
+  }
   if (!isLoaded) {
     return <SkeletonText />;
   }
@@ -230,9 +233,15 @@ function App() {
           )}
           <Polyline onLoad={onLoad} path={path} options={options} />
         
-          <AsignacionNodos /> 
+         {
+          click?(
+            <AsignacionNodos nodo1={originRef.current.value} nodo2={destiantionRef.current.value}/>
+          ):(<div></div>)
+            
+          
+         } 
         </GoogleMap>
-      </Box>
+        </Box>
       <Box
         p={4}
         borderRadius="lg"
@@ -259,7 +268,7 @@ function App() {
           </Box>
          
           <ButtonGroup>
-            <Button colorScheme="pink" type="submit" onClick={calculateRoute}>
+            <Button colorScheme="pink" type="submit" onClick={()=>showroute()}>
               Calculate Route
             </Button>
             <IconButton
