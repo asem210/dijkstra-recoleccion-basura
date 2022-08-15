@@ -10,7 +10,6 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { FaLocationArrow, FaTimes } from "react-icons/fa";
-import { Dkjistra } from "./prueba";
 
 import { AsignacionNodos } from "./nodos";
 
@@ -37,17 +36,17 @@ function App() {
 
   const [map, setMap] = useState(/** @type google.maps.Map */ (null));
   const [directionsResponse, setDirectionsResponse] = useState(null);
-  const [distance, setDistance] = useState("");
-  const [duration, setDuration] = useState("");
+  const [distance, setDistance] = useState("N");
+  const [duration, setDuration] = useState("N");
   const [click, setClick] = useState(false);
   /** @type React.MutableRefObject<HTMLInputElement> */
   const originRef = useRef();
   /** @type React.MutableRefObject<HTMLInputElement> */
   const destiantionRef = useRef();
   const showroute = () => {
-   console.log("ga");
    setClick(true);
   }
+
   if (!isLoaded) {
     return <SkeletonText />;
   }
@@ -70,11 +69,10 @@ function App() {
   }
 
   function clearRoute() {
-    setDirectionsResponse(null);
-    setDistance("");
-    setDuration("");
-    originRef.current.value = "";
-    destiantionRef.current.value = "";
+    
+      setClick(false)
+    originRef.current.value = "N";
+    destiantionRef.current.value = "N";
   }
 
   
@@ -280,8 +278,6 @@ function App() {
           
         </HStack>
         <HStack spacing={4} mt={4} justifyContent="space-between">
-          <Text>Distance: {distance} </Text>
-          <Text>Duration: {duration} </Text>
           <IconButton
             aria-label="center back"
             icon={<FaLocationArrow />}

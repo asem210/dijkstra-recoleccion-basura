@@ -475,57 +475,30 @@ g.addNode("N87", {
       N86: await CalcularDistancia(data[86], data[85]),
     });
   
-  
-        //console.log(g.path("N1", "N3"))
-      // return PintarRecorrido(g.path("N1", "N3")) 
-        
         setarray(g.path(nodo1,nodo2))
-  //    console.log(array)
+
       }
       
       
    
 
   return <div> {array.map( (x) =>{
-   // console.log(array)
-  //     console.log(x) 
-  //    var pathC = [
-  //   { lat: -11.983702353375579, lng: -77.01002225748856 },
-  //   { lat: -11.984136487329181, lng: -77.01016260648828 },  ]
 
-  // var optionsC = {
-  //   strokeColor: "red",
-  //   strokeOpacity: 0.8,
-  //   strokeWeight: 2,
-  //   fillColor: "red",
-  //   fillOpacity: 0.35,
-  //   clickable: false,
-  //   draggable: false,
-  //   editable: false,
-  //   visible: true,
-  //   radius: 30000,
-  //   paths: [
-  //     { lat: -11.983702353375579, lng: -77.01002225748856 },
-  //     { lat: -11.984136487329181, lng: -77.01016260648828 },  ],
-  //   zIndex: 1,
-  // };
-  // return (<Polyline onLoad={onLoad} path={pathC} options={optionsC} />)
-    //return(<li>{x}</li>)
-    if (x!==array[array.length-1] ){ // N1 , N2 ,N3
+    if (x!==array[array.length-1] ){ 
       var i =array.indexOf(x);
       var NodoI= data[Number(array[i].substring(1,array[i].length))-1] 
       var NodoF= data[Number(array[i+1].substring(1,array[i+1].length))-1]
-      //  console.log(NodoI)
+  
       var pathC = [
         { lat: Number(NodoI.lat), lng: Number(NodoI.lon) },
         { lat: Number(NodoF.lat), lng: Number(NodoF.lon) },  ]
       
    var optionsC = {
-    strokeColor: "red",
-    strokeOpacity: 0.8,
+    strokeColor: "blue",
+    strokeOpacity: 1,
     strokeWeight: 2,
-    fillColor: "red",
-    fillOpacity: 0.35,
+    fillColor: "blue",
+    fillOpacity: 1,
     clickable: false,
     draggable: false,
     editable: false,
