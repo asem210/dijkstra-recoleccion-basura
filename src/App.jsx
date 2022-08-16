@@ -211,17 +211,7 @@ function App() {
             <DirectionsRenderer directions={directionsResponse} />
           )}
           <Polyline onLoad={onLoad} path={path} options={options} />
-<<<<<<< HEAD
-        
-         {
-          click?(
-            <AsignacionNodos nodo1={originRef.current.value} nodo2={destiantionRef.current.value}/>
-          ):(<div></div>)
-            
-          
-         } 
-         
-=======
+
 
           {/*Se setea el inicio y el final de la ruta a calcular*/}
           {click ? (
@@ -232,7 +222,7 @@ function App() {
           ) : (
             <div></div>
           )}
->>>>>>> 857a597cf31b37f0647e6780ec0492e15067aab2
+
         </GoogleMap>
       </Box>
       <Box
@@ -247,23 +237,20 @@ function App() {
         <HStack spacing={2} justifyContent="space-between">
           <Box flexGrow={1}>
             <Autocomplete>
-<<<<<<< HEAD
-              <Input type="text" placeholder="INICIO: N1-N87" ref={originRef} />
-=======
+
               {/*Input del punto de inicio*/}
 
-              <Input type="text" placeholder="Origin" ref={originRef} />
->>>>>>> 857a597cf31b37f0647e6780ec0492e15067aab2
+              <Input type="text" placeholder="INICIO: N1-N87" ref={originRef} />
+
+              
+
             </Autocomplete>
           </Box>
           <Box flexGrow={1}>
             <Autocomplete>
-<<<<<<< HEAD
-        
-=======
+     
               {/*Input del punto final*/}
 
->>>>>>> 857a597cf31b37f0647e6780ec0492e15067aab2
               <Input
                 type="text"
                 placeholder="FINAL: N1-N87"
