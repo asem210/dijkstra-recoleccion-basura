@@ -238,6 +238,7 @@ function App() {
             
           
          } 
+         
         </GoogleMap>
         </Box>
       <Box
@@ -252,14 +253,15 @@ function App() {
         <HStack spacing={2} justifyContent="space-between">
           <Box flexGrow={1}>
             <Autocomplete>
-              <Input type="text" placeholder="Origin" ref={originRef} />
+              <Input type="text" placeholder="INICIO: N1-N87" ref={originRef} />
             </Autocomplete>
           </Box>
           <Box flexGrow={1}>
             <Autocomplete>
+        
               <Input
                 type="text"
-                placeholder="Destination"
+                placeholder="FINAL: N1-N87"
                 ref={destiantionRef}
               />
             </Autocomplete>
@@ -273,6 +275,7 @@ function App() {
               aria-label="center back"
               icon={<FaTimes />}
               onClick={clearRoute}
+             
             />
           </ButtonGroup>
           

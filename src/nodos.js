@@ -12,12 +12,11 @@ import {
   Polygon,
   DistanceMatrixService,
 } from "@react-google-maps/api";
-import { Divider } from "@chakra-ui/react";
 import { useEffect } from "react";
+import dist from "@chakra-ui/icon";
 
 
 async function CalcularDistancia(nodo1, nodo2) {
-  var distancia = 0;
   // initialize services
   // eslint-disable-next-line no-undef
   // eslint-disable-next-line no-undef
@@ -58,11 +57,21 @@ async function CalcularDistancia(nodo1, nodo2) {
 
 export const AsignacionNodos = ({nodo1,nodo2}) => {
   const [array,setarray] = React.useState([]);
+  const [distance,setdistance] = React.useState(0);
+
   useEffect(() => {
      calculate()  
     
 
   }, []);
+
+  const mostrarDistancia = () =>{
+  if(distance!==0){
+    alert("La distancia es: "+distance+" m ")
+}
+
+  }
+
 
   async function  calculate() {
     
@@ -476,6 +485,7 @@ g.addNode("N87", {
     });
   
         setarray(g.path(nodo1,nodo2))
+        setdistance(g.path(nodo1,nodo2, {cost : true} ).cost)
 
       }
       
@@ -520,7 +530,11 @@ g.addNode("N87", {
     }
 
 
-  })}  </div>;
+  })}  
+  
+  
+    {mostrarDistancia()}
+  </div>;
 };
 
 
