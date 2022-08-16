@@ -29,11 +29,13 @@ import { useRef, useState } from "react";
 const center = { lat: -11.987504, lng: -77.00561 };
 
 function App() {
+  //Conexion a google maps api
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: "AIzaSyAuUYZORtWcGLjDnCNOKsuqh6DGur0soos",
     libraries: ["places"],
   });
 
+  //Seteo de estados
   const [map, setMap] = useState(/** @type google.maps.Map */ (null));
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const [distance, setDistance] = useState("N");
@@ -44,43 +46,24 @@ function App() {
   /** @type React.MutableRefObject<HTMLInputElement> */
   const destiantionRef = useRef();
   const showroute = () => {
-   setClick(true);
-  }
+    setClick(true);
+  };
 
   if (!isLoaded) {
     return <SkeletonText />;
   }
-  // FUNCION DE CALCULO DE RUTA
-  async function calculateRoute() {
-    if (originRef.current.value === "" || destiantionRef.current.value === "") {
-      return;
-    }
-    // eslint-disable-next-line no-undef
-    const directionsService = new google.maps.DirectionsService();
-    const results = await directionsService.route({
-      origin: originRef.current.value,
-      destination: destiantionRef.current.value,
-      // eslint-disable-next-line no-undef
-      travelMode: google.maps.TravelMode.DRIVING,
-    });
-    setDirectionsResponse(results);
-    setDistance(results.routes[0].legs[0].distance.text);
-    setDuration(results.routes[0].legs[0].duration.text);
-  }
-
+  //Limpiar dibujo al clickar en boton "X"
   function clearRoute() {
-    
-      setClick(false)
+    setClick(false);
     originRef.current.value = "N";
     destiantionRef.current.value = "N";
   }
-
-  
 
   const onLoad = (polyline) => {
     console.log("polyline: ", polyline);
   };
 
+  //Nodos para mapear los bordes de la zona
   const path = [
     { lat: -11.983208, lng: -77.011162 },
     { lat: -11.984275, lng: -77.011161 },
@@ -128,6 +111,7 @@ function App() {
     { lat: -11.983208, lng: -77.011162 },
   ];
 
+  //Opciones para el draw del borde de la zona
   const options = {
     strokeColor: "green",
     strokeOpacity: 0.8,
@@ -196,11 +180,9 @@ function App() {
       h="100vh"
       w="100vw"
     >
-  
-
-      {/* <Dkjistra nodo1={data[0]} nodo2={data[1]} /> */}
       <Box position="absolute" left={0} top={0} h="100%" w="100%">
         {/* Google Map Box */}
+
         <GoogleMap
           center={center}
           zoom={16.5}
@@ -213,7 +195,7 @@ function App() {
           }}
           onLoad={(map) => setMap(map)}
         >
-          {/* poner los marcadores aqui */}
+          {/*Pone como marcadores los nodos del data.json*/}
 
           {data.map((data) => {
             return (
@@ -224,22 +206,23 @@ function App() {
               />
             );
           })}
-     
-
+          {/*Recomendaciones en los input*/}
           {directionsResponse && (
             <DirectionsRenderer directions={directionsResponse} />
           )}
           <Polyline onLoad={onLoad} path={path} options={options} />
-        
-         {
-          click?(
-            <AsignacionNodos nodo1={originRef.current.value} nodo2={destiantionRef.current.value}/>
-          ):(<div></div>)
-            
-          
-         } 
+
+          {/*Se setea el inicio y el final de la ruta a calcular*/}
+          {click ? (
+            <AsignacionNodos
+              nodo1={originRef.current.value}
+              nodo2={destiantionRef.current.value}
+            />
+          ) : (
+            <div></div>
+          )}
         </GoogleMap>
-        </Box>
+      </Box>
       <Box
         p={4}
         borderRadius="lg"
@@ -252,11 +235,15 @@ function App() {
         <HStack spacing={2} justifyContent="space-between">
           <Box flexGrow={1}>
             <Autocomplete>
+              {/*Input del punto de inicio*/}
+
               <Input type="text" placeholder="Origin" ref={originRef} />
             </Autocomplete>
           </Box>
           <Box flexGrow={1}>
             <Autocomplete>
+              {/*Input del punto final*/}
+
               <Input
                 type="text"
                 placeholder="Destination"
@@ -264,9 +251,13 @@ function App() {
               />
             </Autocomplete>
           </Box>
-         
+
           <ButtonGroup>
-            <Button colorScheme="pink" type="submit" onClick={()=>showroute()}>
+            <Button
+              colorScheme="pink"
+              type="submit"
+              onClick={() => showroute()}
+            >
               Calculate Route
             </Button>
             <IconButton
@@ -275,9 +266,10 @@ function App() {
               onClick={clearRoute}
             />
           </ButtonGroup>
-          
         </HStack>
         <HStack spacing={4} mt={4} justifyContent="space-between">
+          {/*Zoom*/}
+
           <IconButton
             aria-label="center back"
             icon={<FaLocationArrow />}
@@ -290,7 +282,6 @@ function App() {
         </HStack>
       </Box>
     </Flex>
-    
   );
 }
 
